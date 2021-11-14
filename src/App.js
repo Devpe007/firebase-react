@@ -1,17 +1,30 @@
 import React, { useState } from "react";
 
+import './styles.css';
+
 import firebase from "./connections/firebaseConnection";
 
 function App() {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
 
-  function handleAdd() {
-    alert('CLICOU');
+  async function handleAdd() {
+    await firebase.firestore().collection('posts')
+     .doc('12345')
+     .set({
+      titulo: title,
+      autor: author,
+     })
+     .then(() => {
+      console.log('DADOS CADASTRADOS COM SUCESSO!')
+     })
+     .catch((error) => {
+      console.log('GEROU ALGUM ERRO: ', error);
+     });
   };
 
   return (
-    <div>
+    <div className="app" >
       <h1>ReactJS + Firebase</h1>
       <br />
 
