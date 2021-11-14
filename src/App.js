@@ -10,13 +10,14 @@ function App() {
 
   async function handleAdd() {
     await firebase.firestore().collection('posts')
-     .doc('12345')
-     .set({
+     .add({
       titulo: title,
       autor: author,
      })
      .then(() => {
       console.log('DADOS CADASTRADOS COM SUCESSO!')
+      setTitle('');
+      setAuthor('');
      })
      .catch((error) => {
       console.log('GEROU ALGUM ERRO: ', error);
