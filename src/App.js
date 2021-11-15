@@ -5,6 +5,7 @@ import './styles.css';
 import firebase from "./connections/firebaseConnection";
 
 function App() {
+  const [idPost, setIdPost] = useState('')
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [posts, setPosts] = useState([]);
@@ -67,10 +68,17 @@ function App() {
      });
   };
 
+  function editPost() {
+    alert('TESTE');
+  };
+
   return (
     <div className="app" >
       <h1>ReactJS + Firebase</h1>
       <br />
+
+      <label>ID: </label>
+      <input type="text" value={idPost} onChange={(event) => setIdPost(event.target.value)} />
 
       <label>Titulo: </label>
       <textarea type="text" value={title} onChange={(event) => setTitle(event.target.value)} />
@@ -80,12 +88,16 @@ function App() {
 
       <button onClick={handleAdd} >Cadastrar</button>
       <button onClick={getPost} >Buscar Post</button>
+      <button onClick={editPost} >Editar</button>
       <br/>
 
       <ul>
         {posts.map((post) => {
           return (
             <li key={post.id} >
+              <span>ID - {post.id}</span>
+              <br />
+
               <span>Titulo: {post.title}</span>
               <br />
 
