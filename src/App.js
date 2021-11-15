@@ -86,6 +86,18 @@ function App() {
      });
   };
 
+  async function deletePost(id) {
+    await firebase.firestore().collection('posts')
+     .doc(id)
+     .delete()
+     .then(() => {
+      alert('ESSE POST FOI EXCLUIDO!')
+     })
+     .catch((error) => {
+      console.log('ERRO AO EXCLUIR', error);
+     });
+  };
+
   return (
     <div className="app" >
       <h1>ReactJS + Firebase</h1>
