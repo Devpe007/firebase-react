@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import './styles.css';
 
@@ -8,6 +8,27 @@ function App() {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    async function loadPosts() {
+      await firebase.firestore().collection('posts')
+       .onSnapshot((document) => {
+        let myPosts = [];
+
+        document.forEach((item) => {
+          myPosts.push({
+            id: item.id,
+            title: item.data().titulo,
+            author: item.data().autor,
+          });
+        });
+
+        setPosts(myPosts);
+       });
+    };
+
+    loadPosts();
+  }, []);
 
   async function handleAdd() {
     await firebase.firestore().collection('posts')
