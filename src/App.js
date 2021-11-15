@@ -117,6 +117,9 @@ function App() {
 
               <span>Autor: {post.author}</span>
               <br />
+              
+              <button onClick={() => deletePost(post.id)} >Excluir Post</button>
+              <br />
               <br />
             </li>
           );
