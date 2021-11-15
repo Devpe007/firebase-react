@@ -68,8 +68,22 @@ function App() {
      });
   };
 
-  function editPost() {
-    alert('TESTE');
+  async function editPost() {
+    await firebase.firestore().collection('posts')
+     .doc(idPost)
+     .update({
+      titulo: title,
+      autor: author,
+     })
+     .then(() => {
+      console.log('DADOS ATUALIZADOS COM SUCESSO!');
+      setIdPost('');
+      setTitle('');
+      setAuthor('');
+     })
+     .catch((error) => {
+      console.log('ERRO AO ATUALIZAR', error);
+     });
   };
 
   return (
