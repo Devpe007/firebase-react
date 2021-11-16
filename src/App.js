@@ -101,8 +101,14 @@ function App() {
      });
   };
 
-  function registerUser() {
-    alert('TESTE')
+  async function registerUser() {
+    await firebase.auth().createUserWithEmailAndPassword(email, password)
+     .then((value) => {
+      console.log('CADASTRADO COM SUCESSO!', value);
+     })
+     .catch((error) => {
+      console.log('error', error);
+     });
   };
 
   return (
