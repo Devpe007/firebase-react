@@ -107,7 +107,11 @@ function App() {
       console.log('CADASTRADO COM SUCESSO!', value);
      })
      .catch((error) => {
-      console.log('error', error);
+      if(error.code === 'auth/weak-password') {
+        alert('Senha muito fraca');
+      } else if(error.code === 'auth/email-already-in-use') {
+        alert('Esse email já está sendo utilizado!')
+      };
      });
   };
 
