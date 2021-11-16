@@ -142,7 +142,13 @@ function App() {
   };
 
   async function login() {
-    alert('TESTE');
+    await firebase.auth().signInWithEmailAndPassword(email, password)
+     .then((value) => {
+      console.log(value.user);
+     })
+     .catch((error) => {
+      console.log('ERRO AO FAZER O LOGIN', error);
+     });
   };
 
   return (
