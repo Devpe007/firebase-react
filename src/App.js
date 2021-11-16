@@ -141,6 +141,10 @@ function App() {
     await firebase.auth().signOut();
   };
 
+  async function login() {
+    alert('TESTE');
+  };
+
   return (
     <div className="app" >
       <h1>ReactJS + Firebase</h1>
@@ -154,7 +158,7 @@ function App() {
           <span>{userLogged.uid} - {userLogged.email}</span>
           <br />
           <br />
-          
+
         </div>
       )}
 
@@ -169,6 +173,7 @@ function App() {
         <input type="password" value={password} onChange={(event) => setPassword(event.target.value)} />
         <br />
 
+        <button onClick={login} >Fazer Login</button>
         <button onClick={registerUser} >Cadastrar</button>
         <button onClick={logOut} >Sair da Conta</button>
       </div>
