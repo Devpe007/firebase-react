@@ -13,6 +13,9 @@ function App() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const [user, setUser] = useState(false);
+  const [userLogged, setUserLogged] = useState({});
+
   useEffect(() => {
     async function loadPosts() {
       await firebase.firestore().collection('posts')
@@ -32,6 +35,25 @@ function App() {
     };
 
     loadPosts();
+  }, []);
+
+  useEffect(() => {
+    async function checkLogin() {
+      await firebase.auth().onAuthStateChanged((user) => {
+        if(user) {
+          setUser(true);
+          setUserLogged({
+            uid: user.uid,
+            email: user.email,
+          });
+        } else {
+          setUser(false);
+          setUserLogged({});
+        };
+      });
+    };
+
+    checkLogin();
   }, []);
 
   async function handleAdd() {
@@ -123,6 +145,18 @@ function App() {
     <div className="app" >
       <h1>ReactJS + Firebase</h1>
       <br />
+
+      {user && (
+        <div>
+          <strong>Seja bem vindo! (Você está logado!)</strong>
+          <br />
+
+          <span>{userLogged.uid} - {userLogged.email}</span>
+          <br />
+          <br />
+          
+        </div>
+      )}
 
       <div>
         <label>Email</label>
