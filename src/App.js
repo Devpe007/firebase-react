@@ -115,6 +115,10 @@ function App() {
      });
   };
 
+  async function logOut() {
+    await firebase.auth().signOut();
+  };
+
   return (
     <div className="app" >
       <h1>ReactJS + Firebase</h1>
@@ -132,6 +136,7 @@ function App() {
         <br />
 
         <button onClick={registerUser} >Cadastrar</button>
+        <button onClick={logOut} >Sair da Conta</button>
       </div>
 
       <hr />
