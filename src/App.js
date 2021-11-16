@@ -10,6 +10,9 @@ function App() {
   const [author, setAuthor] = useState('');
   const [posts, setPosts] = useState([]);
 
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   useEffect(() => {
     async function loadPosts() {
       await firebase.firestore().collection('posts')
@@ -98,11 +101,32 @@ function App() {
      });
   };
 
+  function registerUser() {
+    alert('TESTE')
+  };
+
   return (
     <div className="app" >
       <h1>ReactJS + Firebase</h1>
       <br />
 
+      <div>
+        <label>Email</label>
+        <br />
+        <input type="text" value={email} onChange={(event) => setEmail(event.target.value)} />
+        <br />
+
+        <label>Password</label>
+        <br />
+        <input type="password" value={password} onChange={(event) => setPassword(event.target.value)} />
+        <br />
+
+        <button onClick={registerUser} >Cadastrar</button>
+      </div>
+
+      <hr />
+
+      <h2>Banco de Dados</h2>
       <label>ID: </label>
       <input type="text" value={idPost} onChange={(event) => setIdPost(event.target.value)} />
 
