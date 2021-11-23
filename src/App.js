@@ -127,8 +127,20 @@ function App() {
 
   async function registerUser() {
     await firebase.auth().createUserWithEmailAndPassword(email, password)
-     .then((value) => {
-      console.log('CADASTRADO COM SUCESSO!', value);
+     .then(async (value) => {
+      await firebase.firestore().collection('users')
+       .doc(value.user.uid)
+       .set({
+        name: name,
+        office: office,
+        status: true,
+       })
+       .then(() => {
+        setName('');
+        setOffice('');
+        setEmail('');
+        setPassword('');
+       });
      })
      .catch((error) => {
       if(error.code === 'auth/weak-password') {
@@ -171,6 +183,16 @@ function App() {
       )}
 
       <div>
+        <label>Nome</label>
+        <br />
+        <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+        <br />
+
+        <label>Cargo</label>
+        <br />
+        <input type="text" value={office} onChange={(e) => setOffice(e.target.value)} />
+        <br />
+
         <label>Email</label>
         <br />
         <input type="text" value={email} onChange={(event) => setEmail(event.target.value)} />
@@ -188,16 +210,6 @@ function App() {
       
       <br />
       <br />
-
-      <div>
-        <label>Nome</label>
-        <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
-        <br />
-
-        <label>Cargo</label>
-        <input type="text" value={office} onChange={(e) => setOffice(e.target.value)} />
-        <br />
-      </div>
 
       <hr />
 
