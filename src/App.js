@@ -12,6 +12,8 @@ function App() {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [office, setOffice] = useState('');
+  const [name, setName] = useState('');
 
   const [user, setUser] = useState(false);
   const [userLogged, setUserLogged] = useState({});
@@ -182,6 +184,19 @@ function App() {
         <button onClick={login} >Fazer Login</button>
         <button onClick={registerUser} >Cadastrar</button>
         <button onClick={logOut} >Sair da Conta</button>
+      </div>
+      
+      <br />
+      <br />
+
+      <div>
+        <label>Nome</label>
+        <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+        <br />
+
+        <label>Cargo</label>
+        <input type="text" value={office} onChange={(e) => setOffice(e.target.value)} />
+        <br />
       </div>
 
       <hr />
