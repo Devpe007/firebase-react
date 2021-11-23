@@ -18,6 +18,8 @@ function App() {
   const [user, setUser] = useState(false);
   const [userLogged, setUserLogged] = useState({});
 
+  const [people, setPeople] = useState({});
+
   useEffect(() => {
     async function loadPosts() {
       await firebase.firestore().collection('posts')
@@ -153,6 +155,9 @@ function App() {
 
   async function logOut() {
     await firebase.auth().signOut();
+    setPeople({});
+    setEmail('');
+    setPassword('');
   };
 
   async function login() {
@@ -162,6 +167,26 @@ function App() {
      })
      .catch((error) => {
       console.log('ERRO AO FAZER O LOGIN', error);
+     });
+  };
+
+  async function handleLogin() {
+    await firebase.auth().signInWithEmailAndPassword(email, password)
+     .then(async (value) => {
+      await firebase.firestore().collection('users')
+       .doc(value.user.uid)
+       .get()
+       .then((snapshot) => {
+        setPeople({
+          name: snapshot.data().name,
+          office: snapshot.data().office,
+          status: snapshot.data().status,
+          email: value.user.email,
+        });
+       });
+     })
+     .catch((error) => {
+      console.log('ERRO AO LOGAR', error);
      });
   };
 
@@ -203,6 +228,11 @@ function App() {
         <input type="password" value={password} onChange={(event) => setPassword(event.target.value)} />
         <br />
 
+        
+       <button onClick={handleLogin} >Fazer Login com database</button>
+       <br />
+       <br />
+
         <button onClick={login} >Fazer Login</button>
         <button onClick={registerUser} >Cadastrar</button>
         <button onClick={logOut} >Sair da Conta</button>
@@ -210,6 +240,25 @@ function App() {
       
       <br />
       <br />
+
+      <hr/>
+      <br />
+
+      {Object.keys(people).length > 0 && (
+        <div>
+          <strong>Olá </strong> {people.name}
+          <br />
+
+          <strong>Cargo: </strong> {people.office}
+          <br />
+
+          <strong>Email: </strong> {people.email}
+          <br />
+
+          <strong>Status: </strong> {people.status ? 'ATIVO' : 'DESATIVADO'}
+          <br />
+        </div>
+      )}
 
       <hr />
 
